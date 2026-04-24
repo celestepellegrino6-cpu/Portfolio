@@ -1,0 +1,557 @@
+:root {
+  /* Couleurs */
+  --color-primary: #1A1A1A;
+  --color-accent: #FF00BB;
+  --bg-page: #1871FF;
+  --bg-card: #1A1A1A;
+  --text-primary: #FFFFFF;
+  --text-secondary: #FFFFFF;
+
+  /* Typographie */
+  --font-heading: 'Bricolage Grotesque', serif;
+  --font-body: 'Inter', sans-serif;
+  --font-size-base: 16px;
+
+  /* Espacements */
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 32px;
+  --spacing-xl: 64px;
+
+  /* Divers */
+  --radius-card: 8px;
+  --transition-base: 0.2s ease;
+}
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  padding: 0;
+}
+img, video {
+  max-width: 100%;
+  display: block;
+}
+/* Règle la barre de navigation principale avec logo centré et éléments à gauche et droite */
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-lg);
+  background-color: var(--bg-page);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* Conteneur pour les icônes de réseaux sociaux à gauche */
+.nav-social {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+/* Style des liens des icônes sociales */
+.nav-social a {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-size: var(--font-size-base);
+  transition: color var(--transition-base);
+}
+
+.nav-social a:hover {
+  color: var(--color-accent);
+}
+
+/* Logo centré */
+.nav-logo {
+  font-family: var(--font-heading);
+  font-size: calc(var(--font-size-base) * 1.5);
+  font-weight: 800;
+  color: var(--color-accent);
+}
+
+/* Bouton d'action à droite */
+.nav-action {
+  background-color: var(--color-primary);
+  color: var(--text-primary);
+  padding: var(--spacing-md);
+  border: none;
+  border-radius: var(--radius-card);
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  cursor: pointer;
+  transition: background-color var(--transition-base);
+}
+
+.nav-action:hover {
+  background-color: var(--color-accent);
+}
+
+/* Menu burger pour mobile, caché par défaut */
+@keyframes burger-color {
+  0%   { color: #FF00BB; }
+  25%  { color: #1871FF; }
+  50%  { color: #FF6B00; }
+  75%  { color: #00FFB2; }
+  100% { color: #FF00BB; }
+}
+
+.nav-burger {
+  display: none;
+  background: none;
+  border: none;
+  font-size: calc(var(--font-size-base) * 1.5);
+  cursor: pointer;
+  animation: burger-color 2s linear infinite;
+}
+
+/* Overlay du menu mobile, caché par défaut */
+.nav-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-page);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-lg);
+  z-index: 20;
+}
+
+/* Liens dans l'overlay mobile */
+.nav-overlay a,
+.nav-overlay button:not(.nav-close) {
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+  text-decoration: none;
+  padding: var(--spacing-md);
+  border: none;
+  background: none;
+  cursor: pointer;
+  opacity: 0;
+  transition: transform 0.18s ease, color 0.18s ease;
+  will-change: transform, color;
+}
+
+@keyframes menu-item-enter {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.nav-overlay a.entering,
+.nav-overlay button.entering {
+  animation: menu-item-enter 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Bouton fermer dans l'overlay */
+.nav-close {
+  position: absolute;
+  top: var(--spacing-lg);
+  right: var(--spacing-lg);
+  background: none;
+  border: none;
+  font-size: calc(var(--font-size-base) * 1.5);
+  cursor: pointer;
+  color: var(--text-primary);
+}
+
+/* Responsive : sur mobile, cache la nav desktop et montre le burger */
+@media (max-width: 768px) {
+  .nav-social, .nav-logo, .nav-action {
+    display: none;
+  }
+  .nav-burger {
+    display: block;
+  }
+  .nav-overlay.show {
+    display: flex;
+  }
+}
+/* Section hero avec bannière d'intro */
+.hero {
+  padding: var(--spacing-xl);
+  background-color: var(--bg-page);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Titre principal du hero */
+.hero-title {
+  font-family: var(--font-heading);
+  font-size: calc(var(--font-size-base) * 2.5);
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Texte d'accroche du hero */
+.hero-text {
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+/* Responsive : réduit la taille du titre sur mobile */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: calc(var(--font-size-base) * 2);
+  }
+  .hero {
+    padding: var(--spacing-lg);
+  }
+}
+/* Section grille de projets */
+.projects {
+  padding: var(--spacing-xl);
+  background-color: var(--bg-page);
+}
+
+/* Titre de la section projets */
+.projects-title {
+  font-family: var(--font-heading);
+  font-size: calc(var(--font-size-base) * 1.75);
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Grille des cartes projet */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-lg);
+}
+
+/* Carte individuelle de projet */
+.project-card {
+  background-color: #FFFFFF;
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-card);
+  transition: transform var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.project-card .project-title {
+  color: #1871FF;
+}
+
+.project-card .project-description {
+  color: #1871FF;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Image de la carte projet */
+.project-image {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: var(--radius-card);
+  margin-bottom: var(--spacing-md);
+}
+
+/* Titre de la carte projet */
+.project-title {
+  font-family: var(--font-heading);
+  font-size: calc(var(--font-size-base) * 1.25);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+/* Description de la carte projet */
+.project-description {
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: var(--spacing-md);
+}
+
+/* Lien vers la page détail du projet */
+.project-link {
+  display: inline-block;
+  color: var(--color-accent);
+  text-decoration: none;
+  font-family: var(--font-body);
+  font-weight: 500;
+  transition: color var(--transition-base);
+}
+
+.project-link:hover {
+  color: var(--color-primary);
+}
+
+/* Responsive : grille en colonne unique sur mobile */
+@media (max-width: 768px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+  .projects {
+    padding: var(--spacing-lg);
+  }
+}
+/* Section contact avec formulaire */
+.contact {
+  padding: var(--spacing-xl);
+  background-color: var(--bg-page);
+}
+
+/* Titre de la section contact */
+.contact-title {
+  font-family: var(--font-heading);
+  font-size: calc(var(--font-size-base) * 1.75);
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Formulaire de contact */
+.contact-form {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+/* Groupe de champ dans le formulaire */
+.contact-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+/* Label des champs */
+.contact-label {
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* Champs input et textarea */
+.contact-input, .contact-textarea {
+  padding: var(--spacing-md);
+  border: 1px solid var(--text-secondary);
+  border-radius: var(--radius-card);
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  transition: border-color var(--transition-base);
+}
+
+.contact-input:focus, .contact-textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+/* Textarea spécifique */
+.contact-textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* Bouton d'envoi */
+.contact-submit {
+  background-color: var(--color-primary);
+  color: var(--text-primary);
+  padding: var(--spacing-md);
+  border: none;
+  border-radius: var(--radius-card);
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  cursor: pointer;
+  transition: background-color var(--transition-base);
+}
+
+.contact-submit:hover {
+  background-color: var(--color-accent);
+}
+
+/* Responsive : ajuste le padding sur mobile */
+@media (max-width: 768px) {
+  .contact {
+    padding: var(--spacing-lg);
+  }
+}
+/* Aperçu de la section À propos */
+.about-preview {
+  padding: var(--spacing-xl);
+  text-align: center;
+  background-color: var(--bg-page);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-lg);
+}
+
+.about-title {
+  font-family: var(--font-heading);
+  font-size: calc(var(--font-size-base) * 2);
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.about-text {
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+  max-width: 640px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .about-preview {
+    padding: var(--spacing-lg);
+  }
+}
+
+/* Pied de page avec logo, liens et réseaux */
+.footer {
+  padding: var(--spacing-xl);
+  background-color: #1871FF;
+  color: var(--text-primary);
+  text-align: center;
+}
+
+/* Conteneur principal du footer */
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  align-items: center;
+}
+
+/* Logo ou nom dans le footer */
+.footer-logo {
+  font-family: var(--font-heading);
+  font-size: calc(var(--font-size-base) * 1.5);
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+/* Liens répétés dans le footer */
+.footer-links {
+  display: flex;
+  gap: var(--spacing-lg);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer-links a {
+  color: var(--text-primary);
+  text-decoration: none;
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  transition: color var(--transition-base);
+}
+
+.footer-links a:hover {
+  color: var(--color-accent);
+}
+
+/* Réseaux sociaux dans le footer */
+.footer-social {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.footer-social a {
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: var(--font-size-base);
+  transition: color var(--transition-base);
+}
+
+.footer-social a:hover {
+  color: var(--color-accent);
+}
+
+/* Copyright */
+.footer-copyright {
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+  opacity: 0.8;
+}
+
+/* Responsive : liens en colonne sur mobile */
+@media (max-width: 768px) {
+  .footer-links {
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+  .footer {
+    padding: var(--spacing-lg);
+  }
+}
+/* Page détail projet avec image pleine largeur et texte */
+.project-detail {
+  background-color: var(--bg-page);
+}
+
+/* Image pleine largeur en haut */
+.project-image-full {
+  width: 100%;
+  height: auto;
+}
+
+/* Conteneur du contenu texte */
+.project-content {
+  padding: var(--spacing-xl);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Titre du projet */
+.project-title-detail {
+  font-family: var(--font-heading);
+  font-size: calc(var(--font-size-base) * 2.5);
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+/* Discipline et année */
+.project-meta {
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Texte descriptif du projet */
+.project-description-detail {
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+/* Responsive : ajuste le padding sur mobile */
+@media (max-width: 768px) {
+  .project-content {
+    padding: var(--spacing-lg);
+  }
+  .project-title-detail {
+    font-size: calc(var(--font-size-base) * 2);
+  }
+}
